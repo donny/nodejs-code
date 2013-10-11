@@ -1,16 +1,14 @@
-var express = require('express');
-var app = express();
+var restify = require('restify');
 
-app.use(express.logger('dev'));
+function respond(req, res, next) {
+  res.send('Hello ' + req.params.name);
+  return next();
+}
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+var server = restify.createServer();
 
-var data = {title: 'Donny'};
+server.get('/hello/:name', respond);
 
-app.get('/', function(req, res){
-    res.render('index', data);
+server.listen(8080, function() {
+  console.log('%s listening at %s', server.name, server.url);
 });
-
-app.listen(8080);
-console.log('Listening on port 8080');
