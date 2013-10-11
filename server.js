@@ -1,8 +1,15 @@
 var express = require('express');
 var app = express();
 
-app.get('/hello', function(req, res){
-    res.send('Hello World');
+app.use(express.logger('dev'));
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+
+var data = {title: 'Donny'};
+
+app.get('/', function(req, res){
+    res.render('index', data);
 });
 
 app.listen(8080);
